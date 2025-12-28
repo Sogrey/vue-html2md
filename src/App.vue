@@ -1,9 +1,45 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { useLoadingStore } from '@/stores/loading'
+import GlobalLoading from '@/components/GlobalLoading.vue'
+
+const loadingStore = useLoadingStore()
+const isAppReady = ref(false)
+
+// 立即显示 loading，在应用的最开始
+loadingStore.showLoading({
+  title: '正在初始化',
+  subtitle: '正在加载编辑器组件...'
+})
+
+// 应用初始化时显示 loading
+onMounted(() => {
+  // 延迟隐藏 loading，模拟资源加载
+  setTimeout(() => {
+    loadingStore.showLoading({
+      title: '正在初始化',
+      subtitle: '正在配置转换引擎...'
+    })
+  }, 800)
+  
+  setTimeout(() => {
+    loadingStore.showLoading({
+      title: '准备就绪',
+      subtitle: '即将进入编辑器...'
+    })
+  }, 1200)
+  
+  setTimeout(() => {
+    isAppReady.value = true
+    loadingStore.hideLoading()
+  }, 1500)
+})
 </script>
 
 <template>
-  <RouterView />
+  <GlobalLoading />
+  <RouterView v-if="isAppReady" />
 </template>
 
 <style>

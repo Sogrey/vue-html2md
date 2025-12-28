@@ -117,6 +117,7 @@
 import { ref, nextTick } from 'vue'
 import TurndownService from 'turndown'
 import axios from 'axios'
+import { useLoadingStore } from '@/stores/loading'
 import CherryMarkdown from '@/components/CherryMarkdown.vue'
 
 interface Toast {
@@ -179,6 +180,7 @@ function hello() {
 const isConverting = ref(false)
 const extractMainContent = ref(true)
 const toast = ref<Toast>({ show: false, message: '', type: 'info' })
+const loadingStore = useLoadingStore()
 
 // 初始化 turndown
 const turndownService = new TurndownService({
@@ -229,9 +231,22 @@ const handleUrlConvert = async () => {
   if (!urlInput.value.trim()) return
 
   isConverting.value = true
+  
+  // 显示全局 loading
+  loadingStore.showLoading({
+    title: '正在抓取网页',
+    subtitle: '正在获取页面内容，请稍候...'
+  })
+  
   try {
     console.log('开始请求URL:', urlInput.value)
     console.log('请求地址:', 'http://localhost:3001/api/fetch')
+    
+    // 更新 loading 状态
+    loadingStore.showLoading({
+      title: '正在转换',
+      subtitle: '正在将 HTML 转换为 Markdown...'
+    })
     
     const response = await axios.get('http://localhost:3001/api/fetch', {
       params: {
@@ -244,8 +259,17 @@ const handleUrlConvert = async () => {
     console.log('请求成功:', response.data)
 
     if (response.data.success) {
+      // 更新 loading 状态
+      loadingStore.showLoading({
+        title: '即将完成',
+        subtitle: '正在更新编辑器内容...'
+      })
+      
       const markdown = turndownService.turndown(response.data.html)
       markdownOutput.value = markdown
+      
+      // 隐藏 loading 并显示成功提示
+      loadingStore.hideLoading()
       showToast('URL内容抓取并转换成功！', 'success')
 
       // 滚动到编辑器区域
@@ -254,10 +278,13 @@ const handleUrlConvert = async () => {
         editorSection?.scrollIntoView({ behavior: 'smooth' })
       })
     } else {
+      loadingStore.hideLoading()
       showToast('抓取失败：' + response.data.error, 'error')
     }
   } catch (error) {
     console.error('详细错误信息:', error)
+    loadingStore.hideLoading()
+    
     let errorMessage = 'URL抓取失败'
 
     if (axios.isAxiosError(error)) {
@@ -281,9 +308,24 @@ const handleHtmlConvert = () => {
   if (!htmlInput.value.trim()) return
 
   isConverting.value = true
+  
+  // 显示全局 loading
+  loadingStore.showLoading({
+    title: '正在转换',
+    subtitle: '正在将 HTML 转换为 Markdown...'
+  })
+  
   try {
     const markdown = turndownService.turndown(htmlInput.value)
+    
+    // 更新 loading 状态
+    loadingStore.showLoading({
+      title: '即将完成',
+      subtitle: '正在更新编辑器内容...'
+    })
+    
     markdownOutput.value = markdown
+    loadingStore.hideLoading()
     showToast('转换成功！', 'success')
 
     // 滚动到编辑器区域
@@ -292,6 +334,7 @@ const handleHtmlConvert = () => {
       editorSection?.scrollIntoView({ behavior: 'smooth' })
     })
   } catch (error) {
+    loadingStore.hideLoading()
     showToast('转换失败：' + (error as Error).message, 'error')
   } finally {
     isConverting.value = false
