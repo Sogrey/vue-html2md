@@ -99,10 +99,7 @@
             </button>
           </div>
         </div>
-        <CherryMarkdown
-          :value="markdownOutput"
-          @change="handleMarkdownChange"
-        />
+        <CherryMarkdown :value="markdownOutput" @change="handleMarkdownChange" />
       </section>
 
       <!-- Toast 通知 -->
@@ -231,23 +228,23 @@ const handleUrlConvert = async () => {
   if (!urlInput.value.trim()) return
 
   isConverting.value = true
-  
+
   // 显示全局 loading
   loadingStore.showLoading({
     title: '正在抓取网页',
-    subtitle: '正在获取页面内容，请稍候...'
+    subtitle: '正在获取页面内容，请稍候...',
   })
-  
+
   try {
     console.log('开始请求URL:', urlInput.value)
     console.log('请求地址:', 'http://localhost:3001/api/fetch')
-    
+
     // 更新 loading 状态
     loadingStore.showLoading({
       title: '正在转换',
-      subtitle: '正在将 HTML 转换为 Markdown...'
+      subtitle: '正在将 HTML 转换为 Markdown...',
     })
-    
+
     const response = await axios.get('http://localhost:3001/api/fetch', {
       params: {
         url: urlInput.value,
@@ -262,12 +259,12 @@ const handleUrlConvert = async () => {
       // 更新 loading 状态
       loadingStore.showLoading({
         title: '即将完成',
-        subtitle: '正在更新编辑器内容...'
+        subtitle: '正在更新编辑器内容...',
       })
-      
+
       const markdown = turndownService.turndown(response.data.html)
       markdownOutput.value = markdown
-      
+
       // 隐藏 loading 并显示成功提示
       loadingStore.hideLoading()
       showToast('URL内容抓取并转换成功！', 'success')
@@ -284,7 +281,7 @@ const handleUrlConvert = async () => {
   } catch (error) {
     console.error('详细错误信息:', error)
     loadingStore.hideLoading()
-    
+
     let errorMessage = 'URL抓取失败'
 
     if (axios.isAxiosError(error)) {
@@ -308,22 +305,22 @@ const handleHtmlConvert = () => {
   if (!htmlInput.value.trim()) return
 
   isConverting.value = true
-  
+
   // 显示全局 loading
   loadingStore.showLoading({
     title: '正在转换',
-    subtitle: '正在将 HTML 转换为 Markdown...'
+    subtitle: '正在将 HTML 转换为 Markdown...',
   })
-  
+
   try {
     const markdown = turndownService.turndown(htmlInput.value)
-    
+
     // 更新 loading 状态
     loadingStore.showLoading({
       title: '即将完成',
-      subtitle: '正在更新编辑器内容...'
+      subtitle: '正在更新编辑器内容...',
     })
-    
+
     markdownOutput.value = markdown
     loadingStore.hideLoading()
     showToast('转换成功！', 'success')
@@ -384,14 +381,19 @@ const clearOutput = () => {
 <style scoped>
 .html2md-container {
   min-height: 100vh;
-  background: 
+  background:
     /* 主背景渐变 */
     linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #334155 75%, #0f172a 100%),
-    /* 网格背景 */
-    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    /* 网格背景 */ radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 50%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
-  background-size: 100% 100%, 80px 80px, 80px 80px;
-  background-position: center, 0 0, 40px 40px;
+  background-size:
+    100% 100%,
+    80px 80px,
+    80px 80px;
+  background-position:
+    center,
+    0 0,
+    40px 40px;
   background-attachment: fixed;
   color: #e2e8f0;
   position: relative;
@@ -406,18 +408,29 @@ const clearOutput = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
+  background-image:
     /* 网格线 */
     linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-    /* 光晕效果 */
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    /* 光晕效果 */ radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
-  background-size: 40px 40px, 40px 40px, 300px 300px, 250px 250px, 400px 400px;
-  background-position: 0 0, 0 0, 0 0, 100% 0, 50% 50%;
+  background-size:
+    40px 40px,
+    40px 40px,
+    300px 300px,
+    250px 250px,
+    400px 400px;
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    100% 0,
+    50% 50%;
   background-attachment: fixed;
-  animation: gridMove 20s linear infinite, backgroundPulse 8s ease-in-out infinite;
+  animation:
+    gridMove 20s linear infinite,
+    backgroundPulse 8s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
@@ -425,10 +438,20 @@ const clearOutput = () => {
 /* 网格动画 */
 @keyframes gridMove {
   0% {
-    background-position: 0 0, 0 0, 0 0, 100% 0, 50% 50%;
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      100% 0,
+      50% 50%;
   }
   100% {
-    background-position: 40px 40px, 40px 0, 0 0, 100% 0, 50% 50%;
+    background-position:
+      40px 40px,
+      40px 0,
+      0 0,
+      100% 0,
+      50% 50%;
   }
 }
 
@@ -453,12 +476,14 @@ const clearOutput = () => {
   transform: translateX(-50%);
   width: 300px;
   height: 2px;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(59, 130, 246, 0.8) 20%, 
-    rgba(147, 51, 234, 0.8) 50%, 
-    rgba(236, 72, 153, 0.8) 80%, 
-    transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.8) 20%,
+    rgba(147, 51, 234, 0.8) 50%,
+    rgba(236, 72, 153, 0.8) 80%,
+    transparent
+  );
   animation: headerGlow 3s ease-in-out infinite;
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
 }
@@ -500,25 +525,44 @@ const clearOutput = () => {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #3b82f6 75%, #2563eb 100%);
+  background: linear-gradient(
+    135deg,
+    #3b82f6 0%,
+    #8b5cf6 25%,
+    #ec4899 50%,
+    #3b82f6 75%,
+    #2563eb 100%
+  );
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.02em;
   text-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
-  animation: textGlow 3s ease-in-out infinite alternate, gradientShift 5s linear infinite;
+  animation:
+    textGlow 3s ease-in-out infinite alternate,
+    gradientShift 5s linear infinite;
 }
 
 @keyframes textGlow {
-  0% { filter: brightness(1); }
-  100% { filter: brightness(1.2); }
+  0% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(1.2);
+  }
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .subtitle {
@@ -538,10 +582,10 @@ const clearOutput = () => {
 }
 
 .input-section {
-  background: rgba(15, 23, 42, 0.9);
+  background: transparent;
   border-radius: 20px;
   padding: 2.5rem;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 80px rgba(59, 130, 246, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -563,13 +607,21 @@ const clearOutput = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent),
     linear-gradient(0deg, transparent, rgba(147, 51, 234, 0.2), transparent),
     linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.1), transparent),
     linear-gradient(0deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-  background-size: 100% 2px, 2px 100%, 100% 1px, 1px 100%;
-  background-position: 0 0, 0 0, 0 100%, 100% 0;
+  background-size:
+    100% 2px,
+    2px 100%,
+    100% 1px,
+    1px 100%;
+  background-position:
+    0 0,
+    0 0,
+    0 100%,
+    100% 0;
   background-repeat: no-repeat;
   pointer-events: none;
   border-radius: 20px;
@@ -663,7 +715,7 @@ const clearOutput = () => {
 .url-input:focus {
   outline: none;
   border-color: #60a5fa;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(96, 165, 250, 0.1),
     0 0 20px rgba(96, 165, 250, 0.2);
   background: rgba(13, 17, 23, 0.8);
@@ -707,7 +759,7 @@ const clearOutput = () => {
 
 .convert-btn.primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(59, 130, 246, 0.4),
     0 0 30px rgba(59, 130, 246, 0.2);
   border-color: rgba(96, 165, 250, 0.5);
@@ -761,7 +813,8 @@ const clearOutput = () => {
 }
 
 @keyframes borderGlow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
   }
   50% {
@@ -788,7 +841,7 @@ const clearOutput = () => {
   color: #cbd5e1;
 }
 
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input[type='checkbox'] {
   width: 18px;
   height: 18px;
   accent-color: #3b82f6;
@@ -858,7 +911,7 @@ const clearOutput = () => {
 .html-textarea:focus {
   outline: none;
   border-color: #60a5fa;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(96, 165, 250, 0.1),
     0 0 20px rgba(96, 165, 250, 0.2);
   background: rgba(13, 17, 23, 0.8);
@@ -888,10 +941,10 @@ const clearOutput = () => {
 }
 
 .editor-section {
-  background: rgba(15, 23, 42, 0.9);
+  background: transparent;
   border-radius: 20px;
   padding: 2.5rem;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 80px rgba(59, 130, 246, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -913,13 +966,21 @@ const clearOutput = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent),
     linear-gradient(0deg, transparent, rgba(147, 51, 234, 0.2), transparent),
     linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.1), transparent),
     linear-gradient(0deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-  background-size: 100% 2px, 2px 100%, 100% 1px, 1px 100%;
-  background-position: 0 0, 0 0, 0 100%, 100% 0;
+  background-size:
+    100% 2px,
+    2px 100%,
+    100% 1px,
+    1px 100%;
+  background-position:
+    0 0,
+    0 0,
+    0 100%,
+    100% 0;
   background-repeat: no-repeat;
   pointer-events: none;
   border-radius: 20px;
