@@ -384,17 +384,51 @@ const clearOutput = () => {
 <style scoped>
 .html2md-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #333;
+  background: radial-gradient(ellipse at center, #0a0e27 0%, #020617 50%, #000000 100%);
+  color: #e2e8f0;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 背景装饰效果 */
+.html2md-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(56, 139, 253, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(31, 111, 235, 0.05) 0%, transparent 50%);
+  animation: backgroundPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .header {
   text-align: center;
-  padding: 2.5rem 2rem 1.5rem;
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3rem 2rem 2rem;
+  color: #e2e8f0;
+  background: rgba(10, 14, 39, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* 头部科技装饰线条 */
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.8), transparent);
+  animation: headerGlow 3s ease-in-out infinite;
 }
 
 .header-content {
@@ -410,15 +444,20 @@ const clearOutput = () => {
   margin-bottom: 0.8rem;
 }
 
-.logo-icon {
-  font-size: 2.2rem;
-  animation: float 3s ease-in-out infinite;
+.logo {
+  position: relative;
 }
 
-@keyframes float {
+.logo-icon {
+  font-size: 2.5rem;
+  animation: logoFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.5));
+}
+
+@keyframes logoFloat {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0px);
   }
   50% {
     transform: translateY(-10px);
@@ -426,74 +465,129 @@ const clearOutput = () => {
 }
 
 .logo-text {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(45deg, #fff, #e0e7ff);
-  background-clip: text;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 40px rgba(96, 165, 250, 0.3);
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.2); }
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
+  font-size: 1.2rem;
+  color: #94a3b8;
   margin: 0;
-  font-weight: 300;
+  font-weight: 400;
+  opacity: 0.9;
 }
 
 .main-content {
   width: 100%;
   margin: 0 auto;
-  padding: 1.5rem 3rem;
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 .input-section {
-  background: white;
+  background: rgba(13, 17, 23, 0.9);
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(96, 165, 250, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   margin: 0 auto 2rem auto;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(96, 165, 250, 0.2);
   width: 100%;
   max-width: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 科技感边框装饰 */
+.input-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent),
+    linear-gradient(0deg, transparent, rgba(96, 165, 250, 0.1), transparent);
+  background-size: 100% 1px, 1px 100%;
+  background-position: 0 0, 0 0;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  border-radius: 16px;
 }
 
 .input-tabs {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #f0f0f0;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+  position: relative;
 }
 
 .tab-btn {
   padding: 1rem 1.5rem;
   border: none;
-  background: none;
+  background: transparent;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500;
-  color: #666;
-  border-bottom: 3px solid transparent;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tab-btn:hover {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
+  color: #93c5fd;
+  background: rgba(96, 165, 250, 0.05);
+  transform: translateY(-1px);
 }
 
 .tab-btn.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+  color: #60a5fa;
+  border-bottom-color: transparent;
+}
+
+.tab-btn.active::before {
+  transform: translateX(-50%) scaleX(1);
 }
 
 .tab-icon {
   font-size: 1.2rem;
+  filter: drop-shadow(0 0 5px rgba(96, 165, 250, 0.3));
 }
 
 .url-input-wrapper {
@@ -510,45 +604,77 @@ const clearOutput = () => {
 .url-input {
   flex: 1;
   padding: 1rem 1.5rem;
-  border: 2px solid #e0e0e0;
+  border: 1px solid rgba(96, 165, 250, 0.2);
   border-radius: 12px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  background: rgba(13, 17, 23, 0.6);
+  color: #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.url-input::placeholder {
+  color: #64748b;
 }
 
 .url-input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #60a5fa;
+  box-shadow: 
+    0 0 0 3px rgba(96, 165, 250, 0.1),
+    0 0 20px rgba(96, 165, 250, 0.2);
+  background: rgba(13, 17, 23, 0.8);
 }
 
 .convert-btn {
   padding: 1rem 2rem;
-  border: none;
+  border: 1px solid rgba(96, 165, 250, 0.3);
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.convert-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.convert-btn:hover::before {
+  left: 100%;
 }
 
 .convert-btn.primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
   color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
 .convert-btn.primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.4),
+    0 0 30px rgba(59, 130, 246, 0.2);
+  border-color: rgba(96, 165, 250, 0.5);
 }
 
 .convert-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .loading-spinner {
@@ -569,6 +695,28 @@ const clearOutput = () => {
   }
 }
 
+@keyframes backgroundPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes headerGlow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scaleX(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
 .options {
   display: flex;
   align-items: center;
@@ -577,10 +725,25 @@ const clearOutput = () => {
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #666;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+}
+
+.checkbox-label:hover {
+  color: #cbd5e1;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+  background: rgba(13, 17, 23, 0.6);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .html-input-wrapper {
@@ -597,40 +760,56 @@ const clearOutput = () => {
 
 .label {
   font-weight: 600;
-  color: #333;
+  color: #e2e8f0;
 }
 
 .example-btn {
   padding: 0.5rem 1rem;
-  background: #f5f5f5;
-  border: 1px solid #e0e0e0;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.3);
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
+  color: #93c5fd;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .example-btn:hover {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
+  background: rgba(59, 130, 246, 0.2);
+  color: #dbeafe;
+  border-color: #60a5fa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .html-textarea {
   width: 100%;
-  padding: 1rem;
-  border: 2px solid #e0e0e0;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(96, 165, 250, 0.2);
   border-radius: 12px;
-  font-family: 'Consolas', 'Monaco', monospace;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.9rem;
   resize: vertical;
   min-height: 200px;
+  background: rgba(13, 17, 23, 0.6);
+  color: #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.html-textarea::placeholder {
+  color: #64748b;
 }
 
 .html-textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #60a5fa;
+  box-shadow: 
+    0 0 0 3px rgba(96, 165, 250, 0.1),
+    0 0 20px rgba(96, 165, 250, 0.2);
+  background: rgba(13, 17, 23, 0.8);
 }
 
 .html-actions {
@@ -640,29 +819,55 @@ const clearOutput = () => {
 
 .clear-btn {
   padding: 0.75rem 1.5rem;
-  border: 2px solid #e0e0e0;
-  background: white;
-  color: #666;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clear-btn:hover {
-  border-color: #f44336;
-  color: #f44336;
+  border-color: #ef4444;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .editor-section {
-  background: white;
+  background: rgba(13, 17, 23, 0.9);
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(96, 165, 250, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   margin: 0 auto;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(96, 165, 250, 0.2);
   width: 100%;
   max-width: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 编辑器科技感边框装饰 */
+.editor-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent),
+    linear-gradient(0deg, transparent, rgba(96, 165, 250, 0.1), transparent);
+  background-size: 100% 1px, 1px 100%;
+  background-position: 0 0, 0 0;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  border-radius: 16px;
 }
 
 .editor-header {
@@ -670,12 +875,19 @@ const clearOutput = () => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .editor-header h2 {
   margin: 0;
-  color: #333;
+  color: #e2e8f0;
   font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .editor-actions {
@@ -685,27 +897,54 @@ const clearOutput = () => {
 
 .action-btn {
   padding: 0.75rem 1rem;
-  border: 1px solid #e0e0e0;
-  background: white;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  background: rgba(59, 130, 246, 0.1);
+  color: #93c5fd;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.action-btn:hover::before {
+  left: 100%;
 }
 
 .action-btn:hover {
-  background: #f5f5f5;
-  border-color: #667eea;
-  color: #667eea;
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #60a5fa;
+  color: #dbeafe;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.action-btn.danger {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
 }
 
 .action-btn.danger:hover {
-  border-color: #f44336;
-  color: #f44336;
-  background: #fff5f5;
+  border-color: #ef4444;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .icon {
@@ -750,7 +989,7 @@ const clearOutput = () => {
 
 /* 默认PC宽屏优先 - 真正的宽屏布局 */
 .main-content {
-  padding: 1.5rem 3rem;
+  padding: 2rem 3rem;
   width: 100%;
   min-width: 1200px;
 }
