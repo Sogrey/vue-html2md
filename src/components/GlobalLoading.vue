@@ -128,7 +128,15 @@ onUnmounted(() => {
 .loading-backdrop {
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse at center, #0a0e27 0%, #020617 50%, #000000 100%);
+  background: 
+    /* 主背景渐变 */
+    linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #334155 75%, #0f172a 100%),
+    /* 网格背景 */
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+  background-size: 100% 100%, 80px 80px, 80px 80px;
+  background-position: center, 0 0, 40px 40px;
+  background-attachment: fixed;
   backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
@@ -144,11 +152,18 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(56, 139, 253, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(31, 111, 235, 0.05) 0%, transparent 50%);
-  animation: backgroundPulse 8s ease-in-out infinite;
+  background-image: 
+    /* 网格线 */
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    /* 光晕效果 */
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+  background-size: 40px 40px, 40px 40px, 300px 300px, 250px 250px, 400px 400px;
+  background-position: 0 0, 0 0, 0 0, 100% 0, 50% 50%;
+  background-attachment: fixed;
+  animation: gridMove 20s linear infinite, backgroundPulse 8s ease-in-out infinite;
 }
 
 .loading-content {
@@ -161,6 +176,14 @@ onUnmounted(() => {
   max-width: 400px;
   width: 100%;
   padding: 0 2rem;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(59, 130, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Logo 样式 */
@@ -180,11 +203,11 @@ onUnmounted(() => {
 .logo-icon {
   width: 60px;
   height: 60px;
-  color: #58a6ff;
+  color: #60a5fa;
   position: relative;
   z-index: 2;
   animation: logoFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px rgba(88, 166, 255, 0.5));
+  filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.8));
 }
 
 .logo-glow {
@@ -209,12 +232,14 @@ onUnmounted(() => {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #3b82f6 75%, #2563eb 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.02em;
-  text-shadow: 0 0 40px rgba(96, 165, 250, 0.3);
+  text-shadow: 0 0 40px rgba(96, 165, 250, 0.4);
+  animation: textGlow 3s ease-in-out infinite alternate, gradientShift 5s linear infinite;
 }
 
 .loading-subtitle {
@@ -301,8 +326,9 @@ onUnmounted(() => {
 
 .tech-line {
   position: absolute;
-  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.3), transparent);
-  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+  height: 2px;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
 }
 
 .line-1 {
@@ -337,11 +363,12 @@ onUnmounted(() => {
 }
 
 .dot {
-  width: 4px;
-  height: 4px;
-  background: #60a5fa;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   border-radius: 50%;
   animation: dotPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
 }
 
 .dot:nth-child(2) {
@@ -374,6 +401,15 @@ onUnmounted(() => {
   }
   50% {
     opacity: 1;
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 100% 0, 50% 50%;
+  }
+  100% {
+    background-position: 40px 40px, 40px 0, 0 0, 100% 0, 50% 50%;
   }
 }
 
@@ -426,12 +462,23 @@ onUnmounted(() => {
   0%,
   100% {
     transform: scale(1);
-    opacity: 0.3;
+    opacity: 0.4;
   }
   50% {
     transform: scale(1.5);
-    opacity: 0.8;
+    opacity: 1;
   }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes textGlow {
+  0% { filter: brightness(1) drop-shadow(0 0 40px rgba(96, 165, 250, 0.4)); }
+  100% { filter: brightness(1.3) drop-shadow(0 0 50px rgba(147, 51, 234, 0.6)); }
 }
 
 /* 页面转场动画 */

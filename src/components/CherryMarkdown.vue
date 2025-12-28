@@ -178,25 +178,28 @@ onUnmounted(() => {
 
 /* 浅色主题 */
 #markdown-container[data-theme='light'] {
-  background: #fff;
-  border-color: #e1e4e8;
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 /* 确保 Cherry Markdown 的工具栏样式适配暗色主题 */
 #markdown-container .cherry-toolbar {
-  background: #161b22;
-  border-bottom: 1px solid #30363d;
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+  backdrop-filter: blur(10px);
 }
 
 #markdown-container[data-theme='light'] .cherry-toolbar {
-  background: #f6f8fa;
-  border-bottom-color: #e1e4e8;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: rgba(59, 130, 246, 0.2);
 }
 
 /* 编辑器区域样式 */
 #markdown-container .cherry-editor .CodeMirror {
-  background: #0d1117;
-  color: #c9d1d9;
+  background: rgba(15, 23, 42, 0.7);
+  color: #e2e8f0;
+  border: 1px solid rgba(59, 130, 246, 0.1);
 }
 
 /* 选中文字样式 - 针对 CodeMirror 的具体类名 */
@@ -235,8 +238,9 @@ onUnmounted(() => {
 }
 
 #markdown-container[data-theme='light'] .cherry-editor .CodeMirror {
-  background: #fff;
-  color: #24292f;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
+  border-color: rgba(59, 130, 246, 0.1);
 }
 
 #markdown-container[data-theme='light'] .CodeMirror .CodeMirror-selected {
@@ -269,24 +273,29 @@ onUnmounted(() => {
 
 /* 预览区域样式 */
 #markdown-container .cherry-preview {
-  background: #0d1117;
-  color: #c9d1d9;
+  background: rgba(15, 23, 42, 0.7);
+  color: #e2e8f0;
+  border: 1px solid rgba(59, 130, 246, 0.1);
 }
 
 #markdown-container[data-theme='light'] .cherry-preview {
-  background: #fff;
-  color: #24292f;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
+  border-color: rgba(59, 130, 246, 0.1);
 }
 
 /* 代码块样式 */
 #markdown-container .cherry-preview pre {
-  background: #161b22;
-  border-color: #30363d;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 #markdown-container[data-theme='light'] .cherry-preview pre {
-  background: #f6f8fa;
-  border-color: #d1d9e0;
+  background: rgba(246, 248, 250, 0.9);
+  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* KaTeX 数学公式样式 */
