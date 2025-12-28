@@ -100,7 +100,6 @@
           </div>
         </div>
         <CherryMarkdown
-          v-if="markdownOutput"
           :value="markdownOutput"
           @change="handleMarkdownChange"
         />
@@ -329,7 +328,7 @@ const clearHtml = () => {
 
 // 清空输出
 const clearOutput = () => {
-  markdownOutput.value = ''
+  markdownOutput.value = '# 开始编辑\n\n在这里输入您的 Markdown 内容...'
 }
 </script>
 

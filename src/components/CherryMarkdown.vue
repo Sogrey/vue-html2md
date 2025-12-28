@@ -6,6 +6,7 @@
 import { onMounted, onUnmounted, watch } from 'vue'
 import 'cherry-markdown/dist/cherry-markdown.css'
 import Cherry from 'cherry-markdown'
+import cherryMarkdownConfig from '@/configs/cherry-markdown-config'
 
 interface Props {
   value?: string
@@ -29,115 +30,41 @@ let cherry: Cherry | null = null
 
 const initCherry = () => {
   try {
-    // Cherry Markdown 配置
+    // 创建配置对象，基于配置文件并动态设置属性
     const config = {
-      id: 'markdown-container',
+      ...cherryMarkdownConfig,
       value: props.value || '',
-
-      // // 外部依赖配置
-      // externals: {
-      //   echarts: window.echarts,
-      //   katex: window.katex,
-      //   MathJax: window.MathJax,
-      // },
-
-      // 核心配置
-      config: {
-        // 编辑器配置
-        editor: {
-          defaultModel: 'edit&preview',
-          height: props.height,
-          showToolbar: true,
-          hideScrollbar: false,
-          autoSave2Textarea: false,
-        },
-
-        // 预览器配置
-        previewer: {
-          theme: props.theme,
-          codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
-          className: 'custom-preview',
-          floatWhenClosePreviewer: false,
-          enablePreviewerBubble: false,
-        },
-
-        // 工具栏配置
-        toolbars: {
-          toolbar: [
-            'bold',
-            'italic',
-            'underline',
-            'strikethrough',
-            '|',
-            'header',
-            'list',
-            'ordered-list',
-            'checklist',
-            '|',
-            'code',
-            'code-block',
-            '|',
-            'link',
-            'image',
-            'table',
-            '|',
-            'undo',
-            'redo',
-            'clean',
-            '|',
-            'togglePreview',
-            'fullscreen',
-          ],
-          bubble: false,
-          float: false,
-          toc: {
-            model: 'toc',
-            defaultStyle: 'number',
-          },
-        },
-
-        // 引擎配置
-        engine: {
-          global: {
-            htmlAttrWhiteList: 'part|slot',
-            htmlWhiteList: '',
-            htmlBlackList: 'script|iframe',
-          },
-          syntax: {
-            header: true,
-            list: true,
-            link: true,
-            fontEmphasis: true,
-            table: {
-              enableChart: false,
-              autoAlign: true,
-            },
-            codeBlock: {
-              lineNumber: true,
-              copyCode: true,
-              wrap: false,
-            },
-            footNote: true,
-            toc: {
-              model: 'toc',
-            },
-            mathBlock: false,
-            mermaid: false,
-            autoLink: true,
-          },
-        },
-
-        // 主题配置
-        theme: props.theme === 'dark' ? 'dark' : 'default',
-        codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
-        locale: 'zh_CN',
+      
+      // 动态设置编辑器配置
+      editor: {
+        ...cherryMarkdownConfig.editor,
+        height: props.height,
       },
-
-      // 回调函数
+      
+      // 动态设置预览器配置
+      previewer: {
+        ...cherryMarkdownConfig.previewer,
+        theme: props.theme,
+        codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
+      },
+      
+      // 动态设置主题配置
+      themeSettings: {
+        ...cherryMarkdownConfig.themeSettings,
+        mainTheme: props.theme === 'dark' ? 'dark' : 'default',
+        codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
+      },
+      
+      // 合并回调函数
       callback: {
+        ...cherryMarkdownConfig.callback,
         afterChange: (markdown: string) => {
           try {
             emit('change', markdown)
+            // 调用配置文件中的回调
+            if (cherryMarkdownConfig.callback.afterChange) {
+              cherryMarkdownConfig.callback.afterChange(markdown)
+            }
           } catch (e) {
             console.warn('Callback error:', e)
           }
