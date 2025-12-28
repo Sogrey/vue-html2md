@@ -7,6 +7,15 @@ import { onMounted, onUnmounted, watch } from 'vue'
 import 'cherry-markdown/dist/cherry-markdown.css'
 import Cherry from 'cherry-markdown'
 
+// 声明全局变量类型
+declare global {
+  interface Window {
+    echarts?: any;
+    katex?: any;
+    MathJax?: any;
+  }
+}
+
 interface Props {
   value?: string
   height?: string
@@ -35,7 +44,7 @@ const initCherry = () => {
     }
 
     // 创建本地配置（优先级最高）
-    const localConfig = {
+    const localConfig: any = {
       // 编辑器配置 - 本地优先
       editor: {
         height: props.height,
@@ -73,7 +82,7 @@ const initCherry = () => {
     }
 
     // 最终配置对象
-    const config = {
+    const config: any = {
       id: 'markdown-container',
       value: props.value || '# 欢迎使用 Cherry Markdown\n\n在这里输入 Markdown 文本',
       ...localConfig,
@@ -90,7 +99,7 @@ const initCherry = () => {
       },
     }
 
-    cherry = new Cherry(config)
+    cherry = new Cherry(config as any)
     console.log('Cherry Markdown initialized successfully')
     
     // 在初始化后动态设置选中样式
