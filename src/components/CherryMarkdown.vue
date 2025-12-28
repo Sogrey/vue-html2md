@@ -10,9 +10,9 @@ import Cherry from 'cherry-markdown'
 // 声明全局变量类型
 declare global {
   interface Window {
-    echarts?: any;
-    katex?: any;
-    MathJax?: any;
+    echarts?: any
+    katex?: any
+    MathJax?: any
   }
 }
 
@@ -101,7 +101,7 @@ const initCherry = () => {
 
     cherry = new Cherry(config as any)
     console.log('Cherry Markdown initialized successfully')
-    
+
     // 在初始化后动态设置选中样式
     setTimeout(() => {
       const editorElement = document.querySelector('#markdown-container .cherry-editor')
@@ -168,7 +168,6 @@ onUnmounted(() => {
   border: 1px solid #30363d;
   border-radius: 6px;
   overflow: hidden;
-  background: #0d1117;
 }
 
 /* 浅色主题 */
