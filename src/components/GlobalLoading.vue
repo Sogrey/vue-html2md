@@ -78,7 +78,7 @@ import { useLoadingStore } from '@/stores/loading'
 const loadingStore = useLoadingStore()
 
 // 模拟进度更新
-let progressInterval: NodeJS.Timeout
+let progressInterval: number
 
 onMounted(() => {
   // 初始化进度
