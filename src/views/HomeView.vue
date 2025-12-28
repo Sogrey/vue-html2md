@@ -384,13 +384,21 @@ const clearOutput = () => {
 <style scoped>
 .html2md-container {
   min-height: 100vh;
-  background: radial-gradient(ellipse at center, #0a0e27 0%, #020617 50%, #000000 100%);
+  background: 
+    /* 主背景渐变 */
+    linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #334155 75%, #0f172a 100%),
+    /* 网格背景 */
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+  background-size: 100% 100%, 80px 80px, 80px 80px;
+  background-position: center, 0 0, 40px 40px;
+  background-attachment: fixed;
   color: #e2e8f0;
   position: relative;
   overflow-x: hidden;
 }
 
-/* 背景装饰效果 */
+/* 现代科技网格背景 */
 .html2md-container::before {
   content: '';
   position: fixed;
@@ -398,24 +406,42 @@ const clearOutput = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(56, 139, 253, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(31, 111, 235, 0.05) 0%, transparent 50%);
-  animation: backgroundPulse 8s ease-in-out infinite;
+  background-image: 
+    /* 网格线 */
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    /* 光晕效果 */
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+  background-size: 40px 40px, 40px 40px, 300px 300px, 250px 250px, 400px 400px;
+  background-position: 0 0, 0 0, 0 0, 100% 0, 50% 50%;
+  background-attachment: fixed;
+  animation: gridMove 20s linear infinite, backgroundPulse 8s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
+}
+
+/* 网格动画 */
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 100% 0, 50% 50%;
+  }
+  100% {
+    background-position: 40px 40px, 40px 0, 0 0, 100% 0, 50% 50%;
+  }
 }
 
 .header {
   text-align: center;
   padding: 3rem 2rem 2rem;
   color: #e2e8f0;
-  background: rgba(10, 14, 39, 0.8);
+  background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
   position: relative;
   z-index: 1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* 头部科技装饰线条 */
@@ -425,10 +451,16 @@ const clearOutput = () => {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
+  width: 300px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.8), transparent);
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(59, 130, 246, 0.8) 20%, 
+    rgba(147, 51, 234, 0.8) 50%, 
+    rgba(236, 72, 153, 0.8) 80%, 
+    transparent);
   animation: headerGlow 3s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
 }
 
 .header-content {
@@ -468,18 +500,25 @@ const clearOutput = () => {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #3b82f6 75%, #2563eb 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.02em;
-  text-shadow: 0 0 40px rgba(96, 165, 250, 0.3);
-  animation: textGlow 2s ease-in-out infinite alternate;
+  text-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+  animation: textGlow 3s ease-in-out infinite alternate, gradientShift 5s linear infinite;
 }
 
 @keyframes textGlow {
   0% { filter: brightness(1); }
   100% { filter: brightness(1.2); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .subtitle {
@@ -499,16 +538,17 @@ const clearOutput = () => {
 }
 
 .input-section {
-  background: rgba(13, 17, 23, 0.9);
-  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 20px;
   padding: 2.5rem;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.3),
-    0 0 60px rgba(96, 165, 250, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 80px rgba(59, 130, 246, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(59, 130, 246, 0.2);
   margin: 0 auto 2rem auto;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   width: 100%;
   max-width: none;
   position: relative;
@@ -524,13 +564,16 @@ const clearOutput = () => {
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent),
-    linear-gradient(0deg, transparent, rgba(96, 165, 250, 0.1), transparent);
-  background-size: 100% 1px, 1px 100%;
-  background-position: 0 0, 0 0;
+    linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent),
+    linear-gradient(0deg, transparent, rgba(147, 51, 234, 0.2), transparent),
+    linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.1), transparent),
+    linear-gradient(0deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  background-size: 100% 2px, 2px 100%, 100% 1px, 1px 100%;
+  background-position: 0 0, 0 0, 0 100%, 100% 0;
   background-repeat: no-repeat;
   pointer-events: none;
-  border-radius: 16px;
+  border-radius: 20px;
+  animation: borderGlow 4s ease-in-out infinite;
 }
 
 .input-tabs {
@@ -708,12 +751,21 @@ const clearOutput = () => {
 @keyframes headerGlow {
   0%,
   100% {
-    opacity: 0.3;
-    transform: translateX(-50%) scaleX(0.8);
+    opacity: 0.6;
+    transform: translateX(-50%) scaleX(0.9);
   }
   50% {
     opacity: 1;
     transform: translateX(-50%) scaleX(1);
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
@@ -836,16 +888,17 @@ const clearOutput = () => {
 }
 
 .editor-section {
-  background: rgba(13, 17, 23, 0.9);
-  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 20px;
   padding: 2.5rem;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.3),
-    0 0 60px rgba(96, 165, 250, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 80px rgba(59, 130, 246, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(59, 130, 246, 0.2);
   margin: 0 auto;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   width: 100%;
   max-width: none;
   position: relative;
@@ -861,13 +914,16 @@ const clearOutput = () => {
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent),
-    linear-gradient(0deg, transparent, rgba(96, 165, 250, 0.1), transparent);
-  background-size: 100% 1px, 1px 100%;
-  background-position: 0 0, 0 0;
+    linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent),
+    linear-gradient(0deg, transparent, rgba(147, 51, 234, 0.2), transparent),
+    linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.1), transparent),
+    linear-gradient(0deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  background-size: 100% 2px, 2px 100%, 100% 1px, 1px 100%;
+  background-position: 0 0, 0 0, 0 100%, 100% 0;
   background-repeat: no-repeat;
   pointer-events: none;
-  border-radius: 16px;
+  border-radius: 20px;
+  animation: borderGlow 4s ease-in-out infinite;
 }
 
 .editor-header {

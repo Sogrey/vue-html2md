@@ -165,9 +165,15 @@ onUnmounted(() => {
 #markdown-container {
   width: 100%;
   min-height: v-bind('props.height');
-  border: 1px solid #30363d;
-  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
   overflow: hidden;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(59, 130, 246, 0.2);
 }
 
 /* 浅色主题 */
