@@ -1,36 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML2MD - Vue HTML to Markdown Converter</title>
-    
+
     <!-- Cherry Markdown Dependencies -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
-    
-    <!-- KaTeX CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-    />
-    
-    <!-- KaTeX JS -->
     <script
-      src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"
     ></script>
-    
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+    <!-- KaTeX Auto-render Extension -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
     <!-- 确保依赖加载的脚本 -->
     <script>
-      window.addEventListener('DOMContentLoaded', function() {
-        console.log('KaTeX loaded:', typeof window.katex !== 'undefined');
-        console.log('ECharts loaded:', typeof window.echarts !== 'undefined');
-        
+      window.addEventListener('DOMContentLoaded', function () {
+        console.log('KaTeX loaded:', typeof window.katex !== 'undefined')
+        console.log('ECharts loaded:', typeof window.echarts !== 'undefined')
+
         // 确保 KaTeX 在全局可用
         if (typeof window.katex === 'undefined') {
-          console.error('KaTeX failed to load from CDN');
+          console.error('KaTeX failed to load from CDN')
         }
-      });
+
+        // 确保 KaTeX auto-render 可用
+        if (typeof window.renderMathInElement !== 'undefined') {
+          console.log('KaTeX auto-render extension loaded')
+        }
+      })
     </script>
   </head>
   <body>

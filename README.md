@@ -1,24 +1,27 @@
-# HTML2MD - 网页转Markdown工具
+# HTML2MD - Vue HTML to Markdown Converter
 
-一个现代化的在线工具，将网页URL或HTML片段转换为精美的Markdown文档。
+一个功能强大的 Vue.js 应用，集成了 Cherry Markdown 编辑器，提供完整的 HTML 到 Markdown 转换和编辑体验。
 
 ## ✨ 功能特性
 
-- 🌐 **URL抓取转换** - 输入网页URL，自动抓取并转换为Markdown
-- 📝 **HTML片段转换** - 粘贴HTML代码，即时转换为Markdown  
-- 🎨 **现代化界面** - 渐进式科技风格，美观实用
-- ⚡ **实时预览** - 支持编辑、预览、分屏三种模式
-- 💾 **便捷导出** - 一键复制到剪贴板或下载为.md文件
-- 🔧 **智能提取** - 使用Mozilla Readability算法提取正文内容
-- 📱 **响应式设计** - 完美适配移动端和桌面端
+- 📝 **Cherry Markdown 编辑器** - 腾讯开源的强大 Markdown 编辑器
+- 🧮 **数学公式支持** - 集成 KaTeX 0.16.9，支持行内和块级数学公式
+- 🎨 **深色/浅色主题** - 完整的主题切换支持，包括编辑器样式适配
+- ⚡ **实时预览** - 支持编辑、预览、分屏三种显示模式
+- 📋 **文字选中高亮** - 优化的选中状态，提供清晰的视觉反馈
+- 💾 **便捷操作** - 支持内容复制、清空等操作
+- 🔄 **响应式设计** - 完美适配桌面端和移动端
+- ⚙️ **配置模块化** - 配置文件分离，支持深度合并和优先级控制
 
 ## 🛠️ 技术栈
 
-- **前端**: Vue 3 + TypeScript + Vite
-- **转换引擎**: turndown.js (HTML → Markdown)
-- **编辑器**: 自研Markdown编辑器 (支持编辑/预览/分屏)
-- **后端代理**: Node.js + Express + JSDOM + @mozilla/readability
-- **样式**: 现代化CSS + 渐变色主题
+- **前端框架**: Vue 3 + Composition API + TypeScript
+- **构建工具**: Vite
+- **编辑器**: Cherry Markdown (腾讯开源)
+- **数学引擎**: KaTeX 0.16.9
+- **图表库**: ECharts 5.4.0
+- **包管理**: pnpm
+- **部署**: GitHub Pages (支持 GitHub Actions)
 
 ## 🚀 快速开始
 
@@ -120,31 +123,28 @@ pnpm run preview
 
 ## 🚀 部署
 
-### Vercel部署
+### GitHub Pages (推荐)
+
+项目已配置 GitHub Actions 自动部署：
 
 ```bash
-# 安装 Vercel CLI
-npm i -g vercel
-
-# 部署
-vercel --prod
+# 推送到 main 分支即可自动部署
+git push origin main
 ```
 
-### Docker部署
+### 手动部署
 
-```dockerfile
-FROM node:18-alpine
+```bash
+# 构建项目
+pnpm run build
 
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY . .
-RUN npm run build
-
-EXPOSE 3000
-CMD ["npm", "run", "preview"]
+# 部署到 dist 目录
+pnpm run preview
 ```
+
+### 环境变量
+
+- `VITE_BASE_PATH`: 部署的基础路径 (GitHub Pages 自动设置)
 
 ## 🤝 贡献指南
 
@@ -160,10 +160,21 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 🙏 致谢
 
-- [turndown.js](https://github.com/mixmark-io/turndown) - HTML到Markdown转换
-- [Cherry Markdown](https://github.com/Tencent/cherry-markdown) - Markdown编辑器灵感
-- [Mozilla Readability](https://github.com/mozilla/readability) - 正文内容提取
-- [Vue 3](https://vuejs.org/) - 前端框架
+- [Cherry Markdown](https://github.com/Tencent/cherry-markdown) - 强大的 Markdown 编辑器
+- [KaTeX](https://katex.org/) - 快速的数学公式渲染引擎
+- [ECharts](https://echarts.apache.org/) - 功能丰富的图表库
+- [Vue 3](https://vuejs.org/) - 渐进式 JavaScript 框架
+- [Vite](https://vitejs.dev/) - 下一代前端构建工具
+
+## 📝 更新日志
+
+### v1.0.0 (2024-12-28)
+- ✨ 集成 Cherry Markdown 编辑器
+- 🧮 添加 KaTeX 数学公式支持 (v0.16.9)
+- 🎨 实现深色/浅色主题切换
+- 📋 优化文字选中状态显示
+- ⚙️ 配置模块化重构
+- 🚀 配置 GitHub Pages 自动部署
 
 ---
 
