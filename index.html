@@ -12,17 +12,26 @@
     <!-- KaTeX CSS -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
-      integrity="sha384-Xi8aYP2FSrLj4k9Oguio6oKdUXX+F9S8T9JDoN5GwB27fA2Xc+yf/kIZ/9llV4kAFRUffVksquR/i7lu9IuQeSsQpTDBw5sWOMqMZ2K"
-      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
     />
     
     <!-- KaTeX JS -->
     <script
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"
-      integrity="sha384-X/XKyk+xhLLh5inYPCgT1WKKl2JcnCWROwDkjI8FiMwY4vGc+z4DoHmMnxQ+3+MIX2AzuZfM6P8cTKSR8I+B8Z3j4K"
-      crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
     ></script>
+    
+    <!-- 确保依赖加载的脚本 -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('KaTeX loaded:', typeof window.katex !== 'undefined');
+        console.log('ECharts loaded:', typeof window.echarts !== 'undefined');
+        
+        // 确保 KaTeX 在全局可用
+        if (typeof window.katex === 'undefined') {
+          console.error('KaTeX failed to load from CDN');
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="app"></div>
