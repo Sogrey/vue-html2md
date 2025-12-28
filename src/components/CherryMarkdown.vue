@@ -1,5 +1,5 @@
 <template>
-  <div id="markdown-container"></div>
+  <div id="markdown-container" class="cherry-editor-container"></div>
 </template>
 
 <script setup lang="ts">
@@ -47,7 +47,7 @@ const initCherry = () => {
     const localConfig: any = {
       // 编辑器配置 - 本地优先
       editor: {
-        height: props.height,
+        // 不设置固定高度，让编辑器自然展开
         defaultModel: 'edit&preview',
         showSuggestList: true,
         codemirror: {
@@ -164,7 +164,7 @@ onUnmounted(() => {
 /* 自定义 Cherry Markdown 样式 */
 #markdown-container {
   width: 100%;
-  height: v-bind('props.height');
+  min-height: v-bind('props.height');
   border: 1px solid #30363d;
   border-radius: 6px;
   overflow: hidden;
