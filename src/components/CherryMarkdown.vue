@@ -32,42 +32,57 @@ const initCherry = () => {
   try {
     // 创建配置对象，基于配置文件并动态设置属性
     const config = {
-      ...cherryMarkdownConfig,
+      id: 'markdown-container',
       value: props.value || '',
       
-      // 动态设置编辑器配置
-      editor: {
-        ...cherryMarkdownConfig.editor,
-        height: props.height,
-      },
+      // 外部依赖配置
+      externals: cherryMarkdownConfig.externals,
       
-      // 动态设置预览器配置
-      previewer: {
-        ...cherryMarkdownConfig.previewer,
-        theme: props.theme,
-        codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
-      },
-      
-      // 动态设置主题配置
-      themeSettings: {
-        ...cherryMarkdownConfig.themeSettings,
-        mainTheme: props.theme === 'dark' ? 'dark' : 'default',
-        codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
-      },
-      
-      // 合并回调函数
-      callback: {
-        ...cherryMarkdownConfig.callback,
-        afterChange: (markdown: string) => {
-          try {
-            emit('change', markdown)
-            // 调用配置文件中的回调
-            if (cherryMarkdownConfig.callback.afterChange) {
-              cherryMarkdownConfig.callback.afterChange(markdown)
+      // 核心配置
+      config: {
+        // 编辑器配置
+        editor: {
+          ...cherryMarkdownConfig.editor,
+          height: props.height,
+        },
+        
+        // 预览器配置
+        previewer: {
+          ...cherryMarkdownConfig.previewer,
+          theme: props.theme,
+          codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
+        },
+        
+        // 工具栏配置
+        toolbars: cherryMarkdownConfig.toolbars,
+        
+        // 引擎配置
+        engine: cherryMarkdownConfig.engine,
+        
+        // 主题配置
+        themeSettings: {
+          ...cherryMarkdownConfig.themeSettings,
+          mainTheme: props.theme === 'dark' ? 'dark' : 'default',
+          codeBlockTheme: props.theme === 'dark' ? 'one-dark' : 'github',
+        },
+        
+        // 其他配置
+        isPreviewOnly: cherryMarkdownConfig.isPreviewOnly,
+        multipleFileSelection: cherryMarkdownConfig.multipleFileSelection,
+        drawioIframeUrl: cherryMarkdownConfig.drawioIframeUrl,
+        keydown: cherryMarkdownConfig.keydown,
+        autoScrollByHashAfterInit: cherryMarkdownConfig.autoScrollByHashAfterInit,
+        
+        // 回调函数
+        callback: {
+          ...cherryMarkdownConfig.callback,
+          afterChange: (markdown: string) => {
+            try {
+              emit('change', markdown)
+            } catch (e) {
+              console.warn('Callback error:', e)
             }
-          } catch (e) {
-            console.warn('Callback error:', e)
-          }
+          },
         },
       },
     }
