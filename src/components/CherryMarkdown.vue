@@ -30,6 +30,11 @@ let cherry: Cherry | null = null
 
 const initCherry = () => {
   try {
+    // 检查 KaTeX 是否加载
+    if (!window.katex) {
+      console.warn('KaTeX not loaded, math formulas may not render correctly')
+    }
+    
     // 创建配置对象，基于配置文件并动态设置属性
     const config = {
       id: 'markdown-container',
@@ -159,15 +164,17 @@ onUnmounted(() => {
   color: #c9d1d9;
 }
 
-/* 选中文字样式 */
-#markdown-container .cherry-editor .CodeMirror-selected {
-  background: #1f6feb !important;
-  color: #ffffff !important;
+/* 选中文字样式 - 使用更具体的选择器 */
+#markdown-container .cherry-editor .CodeMirror .CodeMirror-selected {
+  background: rgba(31, 111, 235, 0.3) !important;
 }
 
 #markdown-container .cherry-editor .CodeMirror ::selection {
-  background: #1f6feb !important;
-  color: #ffffff !important;
+  background: rgba(31, 111, 235, 0.3) !important;
+}
+
+#markdown-container .cherry-editor .CodeMirror ::-moz-selection {
+  background: rgba(31, 111, 235, 0.3) !important;
 }
 
 #markdown-container[data-theme='light'] .cherry-editor .CodeMirror {
@@ -175,14 +182,16 @@ onUnmounted(() => {
   color: #24292f;
 }
 
-#markdown-container[data-theme='light'] .cherry-editor .CodeMirror-selected {
-  background: #0366d6 !important;
-  color: #ffffff !important;
+#markdown-container[data-theme='light'] .cherry-editor .CodeMirror .CodeMirror-selected {
+  background: rgba(3, 102, 214, 0.3) !important;
 }
 
 #markdown-container[data-theme='light'] .cherry-editor .CodeMirror ::selection {
-  background: #0366d6 !important;
-  color: #ffffff !important;
+  background: rgba(3, 102, 214, 0.3) !important;
+}
+
+#markdown-container[data-theme='light'] .cherry-editor .CodeMirror ::-moz-selection {
+  background: rgba(3, 102, 214, 0.3) !important;
 }
 
 /* 预览区域样式 */
