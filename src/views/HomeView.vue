@@ -230,6 +230,9 @@ const handleUrlConvert = async () => {
 
   isConverting.value = true
   try {
+    console.log('开始请求URL:', urlInput.value)
+    console.log('请求地址:', 'http://localhost:3001/api/fetch')
+    
     const response = await axios.get('http://localhost:3001/api/fetch', {
       params: {
         url: urlInput.value,
@@ -237,6 +240,8 @@ const handleUrlConvert = async () => {
       },
       timeout: 15000,
     })
+
+    console.log('请求成功:', response.data)
 
     if (response.data.success) {
       const markdown = turndownService.turndown(response.data.html)
@@ -252,6 +257,7 @@ const handleUrlConvert = async () => {
       showToast('抓取失败：' + response.data.error, 'error')
     }
   } catch (error) {
+    console.error('详细错误信息:', error)
     let errorMessage = 'URL抓取失败'
 
     if (axios.isAxiosError(error)) {

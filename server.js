@@ -90,8 +90,16 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 Proxy server running on http://localhost:${PORT}`)
   console.log(`📊 Health check: http://localhost:${PORT}/health`)
   console.log(`🔗 Fetch API: http://localhost:${PORT}/api/fetch?url=<URL>`)
+})
+
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use`)
+  } else {
+    console.error('❌ Server error:', error)
+  }
 })
