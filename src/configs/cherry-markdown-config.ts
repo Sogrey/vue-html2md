@@ -67,6 +67,7 @@ const cherryMarkdownConfig = {
       },
       mathBlock: {
         engine: 'katex', // 使用 katex 作为数学公式引擎
+        src: 'https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js',
       },
       inlineMath: {
         engine: 'katex',

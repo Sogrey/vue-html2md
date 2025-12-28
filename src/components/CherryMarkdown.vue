@@ -159,9 +159,30 @@ onUnmounted(() => {
   color: #c9d1d9;
 }
 
+/* 选中文字样式 */
+#markdown-container .cherry-editor .CodeMirror-selected {
+  background: #1f6feb !important;
+  color: #ffffff !important;
+}
+
+#markdown-container .cherry-editor .CodeMirror ::selection {
+  background: #1f6feb !important;
+  color: #ffffff !important;
+}
+
 #markdown-container[data-theme='light'] .cherry-editor .CodeMirror {
   background: #fff;
   color: #24292f;
+}
+
+#markdown-container[data-theme='light'] .cherry-editor .CodeMirror-selected {
+  background: #0366d6 !important;
+  color: #ffffff !important;
+}
+
+#markdown-container[data-theme='light'] .cherry-editor .CodeMirror ::selection {
+  background: #0366d6 !important;
+  color: #ffffff !important;
 }
 
 /* 预览区域样式 */
@@ -184,5 +205,23 @@ onUnmounted(() => {
 #markdown-container[data-theme='light'] .cherry-preview pre {
   background: #f6f8fa;
   border-color: #d1d9e0;
+}
+
+/* KaTeX 数学公式样式 */
+#markdown-container .cherry-preview .katex {
+  font-size: 1.1em;
+}
+
+#markdown-container .cherry-preview .katex-display {
+  margin: 1em 0;
+  text-align: center;
+}
+
+#markdown-container[data-theme='light'] .cherry-preview .katex {
+  color: #24292f;
+}
+
+#markdown-container .cherry-preview .katex {
+  color: #c9d1d9;
 }
 </style>
